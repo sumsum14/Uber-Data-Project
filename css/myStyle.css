@@ -50,3 +50,13 @@ body{
 option {
   color: #000;
 }
+
+.sectionTab {
+  background-color: yellow;
+  text-align: center;
+}
+
+#drivers .driverInfo {
+  min-width: 140px;
+  text-align: center;
+}

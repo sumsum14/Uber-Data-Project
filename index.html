@@ -10,6 +10,7 @@
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="libs/d3/d3.min.js" charset="utf-8"></script>
     <script src="libs/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+    <script src="libs/plotly-latest.min.js" charset="utf-8"></script>
     <script src="http://d3js.org/queue.v1.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
@@ -94,52 +95,135 @@
     <div class="row row-height"></div>
 
     <div class="row" id="topRow">
-        <div class="col-md-1"></div>
-        <div class="col-md-5">
-          <div class="row">
-              <h1><b id="selectedCity">Select a city</b></h1>
-          </div>
-          <div class="row">
-              <p id="selectedDate"></p>
-          </div>
-          <div class="row">
-              <div class="col-md-4">
-                  <h3 id="selectedWeather"></h3>
-              </div>
-              <div class="col-md-4">
-                  <h3 id="selectedTemp"></h3>
-              </div>
-              <div class="col-md-4">
-                
-              </div>
-          </div>
-          <div>
-          
-          </div>
+
+        <div class="col-md-6">
+
+            <div class="row">
+                  <div class="col-md-8 sectionTab">
+                      <div class="col-md-4"></div>
+                      <div class="col-md-8">
+                        <div class="row">
+                            <h1><b id="selectedCity">Select a city</b></h1>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-md-4"></div>
+            </div>
+
+            <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-6">
+                          <h4 id="selectedDate"></h4>
+                      </div>
+                      <div class="col-md-2">
+                          <h3 id="selectedWeather"></h3>
+                      </div>
+                      <div class="col-md-2">
+                          <h3 id="selectedTemp"></h3>
+                      </div>
+            </div>
+
+            <div class="row" id="weatherVis">
+                <!--
+
+                    NEED TO MAKE WEATHER VISUALIZATION INTERACTIVE HERE
+                    
+                -->
+            </div>
+
         </div>
 
         <div class="col-md-6" id="mapVis">
             <div id="map"></div>
         </div>
     </div>
-    <div class="row-height"></div>
-    <div class="row" id="secondRow">
-        <div class="col-md-1"></div>
-        <div class="col-md-5">
-            
-        </div>
-        <div class="col-md-5">
-          <p>
-            <h1><b>Here's how we did it</b></h1>
-            Our project is a thing where we did Uber learning to predict surge prices. We think it's dope. Try the app in the navbar to estimate the surge for a future ride!
-            <br><br>
-            You can also use the map on the right to select your city
-          </p>
-        </div>
-        <div class="col-md-1"></div>
-    </div>
-            
 
+    <!--  -->
+    <div class="row-height"></div>
+    <div class="row">
+        <div class="col-md-4 sectionTab">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-9">
+                <h1><b><strike>How's</strike> Why's the weather up there?</b></h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-height"></div>
+    <div class="row" id="drivers">
+        <div class="col-md-4 col-md-push-8 sectionTab">
+              <p>
+                <h1><b>Meet the drivers</b></h1>
+                We're big fans of Uber so we wanted to do something fun and relevant!
+                <br><br>
+                Star ratings reflect the individual's actual Uber rating.
+              </p>
+        </div>
+        <div class="col-md-8 col-md-pull-4">
+              <div class="col-md-1"></div>
+                  
+              <div class="col-md-2 driverInfo">
+                  <div class="row">
+                      <img src="img/Trabes.png"/>
+                  </div>
+                  <div class="row">
+                      <b>
+                        <h4 class="riderName">Peter Traber</h4>
+                        Applied Math & Government
+                      </b>
+                  </div>
+              </div>
+              
+              <div class="col-md-2 driverInfo">
+                  <div class="row">
+                      <img src="img/Abbie.png"/>
+                  </div>
+                  <div class="row">
+                      <b>
+                        <h4 class="riderName">Abbie Orlando</h4>
+                        Neurobiology & Computer Science
+                      </b>
+                  </div>
+              </div>
+              
+              <div class="col-md-2 driverInfo">
+                <div class="row">
+                      <img src="img/Summer.png"/>
+                  </div>
+                  <div class="row">
+                      <b>
+                        <h4 class="riderName">Summer Carter</h4>
+                        Computer Science & Economics
+                      </b>
+                  </div>
+              </div>
+
+              <div class="col-md-2 driverInfo">
+                  <div class="row">
+                      <img src="img/Dill.png"/>
+                  </div>
+                  <div class="row">
+                      <b>
+                        <h4 class="riderName">Dillon Tiner</h4>
+                        Statistics & History of Art and Architecture
+                      </b>
+                  </div>
+              </div>
+
+              <div class="col-md-2 driverInfo">
+                  <div class="row">
+                      <img src="img/Scratchy.png"/>
+                  </div>
+                  <div class="row">
+                      <b>
+                        <h4 class="riderName">Scratchy</h4>
+                        Astrophysics & Folklore and Mythology (Joint)
+                      </b>
+                  </div>
+              </div>
+        </div>
+    </div>
 
 
     <!--                            -->
