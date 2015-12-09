@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Uber is Dope</title>
+
+    <!-- Task #1                            				-->
+    <!-- Insert libraries									-->
+    <!--							 						-->
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="libs/d3/d3.min.js" charset="utf-8"></script>
+    <script src="libs/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+    <!-- Stylesheets-->
+    <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/myStyle.css">
+
+    <!-- Get some nice font-->
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
+
+    <!--                             						        -->
+    <!-- Insert own scripts for each vis .js files 			-->
+    <!--							 						                      -->
+    <!--script src="js/barvis.js"></script-->
+    <script src="js/surgeEstimator.js"></script>
+    <script src="js/mapvis.js"></script>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <!--link rel="stylesheet" href="/resources/demos/style.css"-->
+  <script>
+  $(function() {
+    $( "#datepicker" ).datepicker(
+    );
+  });
+  </script>
+
+    <!-- Add own stylesheet from css folder					-->
+    <!--link rel="stylesheet" type="text/css" href="css/myStyle.css"-->
+
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          
+          <ul class="nav navbar-nav navbar-right">
+            <li class="navList">I plan to ride on</li>
+            <li>
+                  <form id="dateSelect">
+                        <input type="text" id="datepicker" class="estimatorForm" onchange="onChange()">
+                  </form>
+            </li>
+            <li class="navList">at</li>
+            <li>
+                <form id="timeSelect">
+                        <input type="time" name="usr_time" id="timepicker" class="estimatorForm" onchange="onChange()">
+                </form>
+            </li>
+            <li class="navList">in</li>
+            <li> 
+                <form id="citySelect">
+                    <select name="city" id="nowCity" class="estimatorForm" onchange="onChange()">
+                      <option value="Atlanta">Atlanta</option>
+                      <option value="Boston">Boston</option>
+                      <option value="New York">New York</option>
+                      <option value="San Francisco">San Francisco</option>
+                      <option value="Washington DC">Washington DC</option>
+                    </select>
+                </form>
+            </li>
+            <li class="navList">
+                <button id="suggestCity" onclick=getLocation()>
+                  <p id="suggestCityText"> Not in your city? Suggest a location! </p>
+                </button>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-left">
+            <li><img src="img/usurge.png" alt="uSurge Logo" width=120/></li>
+          </ul>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="row row-height"></div>
+
+    <div class="row" id="topRow">
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+          <div class="row">
+              <h1><b id="selectedCity">Select a city</b></h1>
+          </div>
+          <div class="row">
+              <p id="selectedDate"></p>
+          </div>
+          <div class="row">
+              <div class="col-md-4">
+                  <h3 id="selectedWeather"></h3>
+              </div>
+              <div class="col-md-4">
+                  <h3 id="selectedTemp"></h3>
+              </div>
+              <div class="col-md-4">
+                
+              </div>
+          </div>
+          <div>
+          
+          </div>
+        </div>
+
+        <div class="col-md-6" id="mapVis">
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class="row-height"></div>
+    <div class="row" id="secondRow">
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+            
+        </div>
+        <div class="col-md-5">
+          <p>
+            <h1><b>Here's how we did it</b></h1>
+            Our project is a thing where we did Uber learning to predict surge prices. We think it's dope. Try the app in the navbar to estimate the surge for a future ride!
+            <br><br>
+            You can also use the map on the right to select your city
+          </p>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+            
+
+
+
+    <!--                            -->
+    <!--                            -->
+    <!--  AFTER ALL HTML IS LOADED  -->
+    <!--                            -->
+    <!--                            -->
+
+    <script>
+      /* Location Finder */
+      var x = document.getElementById("suggestCityText");
+
+      function getLocation() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(showPosition, showError);
+          } else { 
+              x.innerHTML = "Geolocation is not supported by this browser.";
+          }
+      }
+
+      function showPosition(position) {
+          x.innerHTML = "Thanks!"; 
+      }
+
+      function showError(error) {
+          switch(error.code) {
+              case error.PERMISSION_DENIED:
+                  x.innerHTML = "Alrighty then!"
+                  break;
+              case error.POSITION_UNAVAILABLE:
+                  x.innerHTML = "Thanks!"
+                  break;
+              case error.TIMEOUT:
+                  x.innerHTML = "Thanks!"
+                  break;
+              case error.UNKNOWN_ERROR:
+                  x.innerHTML = "Thanks!"
+                  break;
+          }
+      }
+
+    </script>
+
+</body>
+<footer>
+</footer>
+</html>
