@@ -1,16 +1,3 @@
-/* 
-
-To Do:
-
-- Use actual surge data/estimates
-- On mouseover for markers, include something??? Would require more api calls though
-
-Optional features:
-
-- 
-
-*/
-
 function initialize() {
         var mapCanvas = document.getElementById('map');
         var mapOptions = {
@@ -18,6 +5,7 @@ function initialize() {
           zoom: 8,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           disableDoubleClickZoom: true,
+          disableDefaultUI: true,
           draggable: false,
           scrollwheel: false,
           panControl: false
@@ -36,7 +24,7 @@ function initialize() {
           animation: google.maps.Animation.DROP,
           map: map,
           // Need to get surge info when date/time
-          title: '1.9',
+          title: 'Atlanta',
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 6
@@ -46,7 +34,7 @@ function initialize() {
           position: new google.maps.LatLng(42.3605229,-71.0579748),
           animation: google.maps.Animation.DROP,
           map: map,
-          title: '1.6',
+          title: 'Boston',
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 6
@@ -56,7 +44,7 @@ function initialize() {
           position: new google.maps.LatLng(40.7127744,-74.006059),
           animation: google.maps.Animation.DROP,
           map: map,
-          title: '1.2',
+          title: 'New York',
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 6
@@ -66,7 +54,7 @@ function initialize() {
           position: new google.maps.LatLng(37.779272,-122.4193494),
           animation: google.maps.Animation.DROP,
           map: map,
-          title: '1.5',
+          title: 'San Francisco',
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 6
@@ -76,7 +64,7 @@ function initialize() {
           position: new google.maps.LatLng(38.8899389,-77.0090505),
           animation: google.maps.Animation.DROP,
           map: map,
-          title: 'No Surge',
+          title: 'Washington DC',
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 6
@@ -87,7 +75,7 @@ function initialize() {
           c=$("#nowCity").val();
           if (c!="Atlanta") {
             $("#nowCity").val('Atlanta');
-            onChange();
+            submitChanges();
           }
           // if we wanted to zoom on click
           //map.setZoom(8);
@@ -97,40 +85,30 @@ function initialize() {
           c=$("#nowCity").val();
           if (c!="Boston") {
             $("#nowCity").val('Boston');
-            onChange();
+            submitChanges();
           }
         });
         NewYork.addListener('click', function() {
           c=$("#nowCity").val();
           if (c!="New York") {
             $("#nowCity").val('New York');
-            onChange();
+            submitChanges();
           }
         });
         SanFran.addListener('click', function() {
           c=$("#nowCity").val();
           if (c!="San Francisco") {
             $("#nowCity").val('San Francisco');
-            onChange();
+            submitChanges();
           }
         });
         WashDC.addListener('click', function() {
           c=$("#nowCity").val();
           if (c!="Washington DC") {
             $("#nowCity").val('Washington DC');
-            onChange();
+            submitChanges();
           }
         });
-
-        /* Write on the map
-        var myTitle = document.createElement('h1');
-        myTitle.style.color = 'white';
-        myTitle.innerHTML = 'Hello World';
-        var myTextDiv = document.createElement('div');
-        myTextDiv.appendChild(myTitle);
-        map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(myTextDiv);
-        */
-
-      }
+}
 
 google.maps.event.addDomListener(window, 'load', initialize);

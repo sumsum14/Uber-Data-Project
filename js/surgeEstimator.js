@@ -1,80 +1,67 @@
-// Surge
+// Surge Estimation functions
 
-// might need glocal declarations for more variables!
-var date;
-var time;
-var city;
-var hourBlock;
+// Global variable declarations
+
 
 // TO DO: MAKE SURE TIME ZONES DON'T MESS UP SAN FRANCISCO WEATHER REQUESTS
-function getWeather() {
-
-	date = document.getElementById("datepicker").value;
-	time = document.getElementById("timepicker").value;
-	city = document.getElementById("nowCity").value;
+function updateWeather(date, time, city, rideType) {
+	// get longitude and latitude for querying weather
 	var latlon = {"Atlanta": [33.7488933,-84.3903931], "Boston": [42.3605229,-71.0579748], "New York": [40.7127744,-74.006059], "San Francisco": [37.779272,-122.4193494], "Washington DC": [38.8899389,-77.0090505]};
 	var lat = latlon[city][0];
 	var lon = latlon[city][1];
-
-  	date = date.replace("/", "-").replace("/", "-");
-  	time = time.concat(":00");
-  	datetime = date.concat(" "+time);
 
   	if (city.localeCompare("San Francisco")===0) {
   		console.log("dope");
   	};
 
-  	// convert time to nearest three hour block
+	// Calculate index based on time input
+ 	var hourBlock = roundHourBlock(date, time);
+ 	var day = new Date(date).getDay();
 
-  	// calculate difference to see which forecast to call
-	var xx = new Date(datetime).getTime()
-	var now = new Date().getTime();
-	today = roundDay(now);
-	console.log(datetime, xx, now);
+ 	console.log(hourBlock);
 
-	var difference = Math.abs(xx - now);
-	console.log(difference);
- 	// forcasting conditions call 5 day
-  	if (difference <= 432000000) {
-  		hourBlock = (difference - difference%10800000)/10800000 + 1;
-  		//console.log("within 5  - hourBlock:", hourBlock); 
-  		var url = "http://api.openweathermap.org/data/2.5/forecast?lat="+String(lat)+"&lon="+String(lon)+"&APPID=25f78cc77890be12d72bd825dcbdcd37&callback=?";
-	  	$.getJSON(url, function(json) {
-	  		/*var main = json.list[hourBlock].weather[0].main;
-	  		var temp = json.list[hourBlock].main.temp;
-	  		temp = temp * 9 / 5  - 459.67;
-	  		temp = String(Math.round(temp)).concat("°F");
-	  		console.log(temp);
-	  		var title = "Weather in ";
-	  		title = title.concat(city);
-	  		var d = new Date(datetime);
-	  		// Change weather lables
-	  		changeText("selectedCity", title);
-	  		changeText("selectedDate", d);
-	  		changeText("selectedTemp", temp);
-	  		changeText("selectedWeather", main);*/
-	  		updateWeather5(hourBlock, json, datetime, city);
-
-	  		console.log(hourBlock, json.list);
-  		});
-  	} else if (difference <= 1382000000) {
-  		var day = (difference - difference%86400000)/86400000 + 2;
-  		var url = "http://api.openweathermap.org/data/2.5/forecast/daily?cnt=16&lat="+String(lat)+"&lon="+String(lon)+"&APPID=25f78cc77890be12d72bd825dcbdcd37&callback=?";
-
-  		$.getJSON(url, function(json) {
-  			updateWeather16(day, json, datetime, city)
-	  		//console.log(day, json.list);
-  		});
-  	};  	
+ 	//call weather data from Weather Underground API and update display divs
+	var w_url = "http://api.wunderground.com/api/51192aa9f8ab44fb/hourly10day/q/"+String(lat)+","+String(lat)+".json"
+	$.getJSON(w_url, function(json) {
+			console.log(json);
+			changeText("selectedTemp", json.hourly_forecast[hourBlock].temp.english + "°F");
+			changeText("selectedWeather", json.hourly_forecast[hourBlock].condition);
+			predictSurge(rideType, city, json.hourly_forecast[hourBlock].temp.english, day, time, json.hourly_forecast[hourBlock].condition);
+	});
+	
 }
 
-// Function called when selection changes occur
-function onChange() {
-	getWeather();
-	// make $.getJSON() call to AWS to return prediction json
-	var AWSurl = "http://52.34.28.96:5000/";
-	$.getJSON(AWSurl, function(json) {
+// Function called when use submits selections
+function submitChanges() {
+	// when selections change, get values for weather calculations
+	var date = document.getElementById("datepicker").value;
+	var time = document.getElementById("timepicker").value;
+	var city = document.getElementById("nowCity").value;
+	var rideType = document.getElementById("rideType").value;
+
+	// changes global temp and weather variables
+	updateWeather(date, time, city, rideType);
+
+	// update other display text
+	changeText("selectedCity", city);
+	changeText("selectedDate", date);
+	changeText("selectedTime", time);
+}
+
+function predictSurge(rideType, city, temp, day, time, weather) {
+	var modelURL = "http://52.34.28.96:5000/ride="+String(rideType)+"&city="+String(city)+"&temp="+String(temp)+"&day="+String(day)+"&time="+String(time)+"&weather="+String(weather);
+	console.log(modelURL);
+
+	// make $.getJSON() call to AWS to return prediction in json format
+	$.getJSON(modelURL, function(json) {
 		console.log("hey");
+		console.log(json);
+		for (key in json) {
+			if (json[key]==Math.max(json)) {
+				changeText("surge", key);
+			}
+		};
+		
   	});
 }
 
@@ -85,67 +72,24 @@ function changeText(id, text) {
 }
 
 // For 5-day forecasts, 3-hour blocks
-function roundHourBlock(d) {
-	var hb = new Date(d).getHours();
-	console.log(hb);
-	hb = hb - hb%3;
-	var nd = new Date(d).setHours(hb);
-	nd = new Date(nd).setMinutes(00);
-	return nd;
-}
+function roundHourBlock(d, t) {
+	var hb;
+	var now = new Date().getTime();
+ 	console.log(d, t);
 
-// for 16-day forecasts, 1-day blocks
-function roundDay(d) {
-	day = new Date(d).getDate();
-	day = day+1;
-	nd = new Date(d).setHours(00);
-	nd = new Date(nd).setMinutes(00);
-	nd = new Date(nd).setSeconds(00);
-	nd = new Date(nd).setDate(day);
-	return nd;
-}
+ 	var dt = d.concat(" "+t);
+ 	dt = new Date(dt);
+ 	var diff = new Date(dt - now);
 
-function updateWeather5(block, json, datetime, city) {
-	var main = json.list[hourBlock].weather[0].main;
-	var temp = json.list[hourBlock].main.temp;
-	temp = temp * 9 / 5  - 459.67;
-	temp = String(Math.round(temp)).concat("°F");
-	var title = "Weather in ";
-	title = title.concat(city);
-	var d = new Date(datetime);
-	// Change weather lables
-	changeText("selectedCity", title);
-	changeText("selectedDate", d);
-	changeText("selectedTemp", temp);
-	changeText("selectedWeather", main);
-}
+ 	// convert to hours difference for indexing into weather forecast data
+ 	var hb = (diff - diff%3600000)/3600000;
+ 	console.log(hb);
 
-function updateWeather16(day, json, datetime, city) {
-	var main = json.list[day].weather[0].main;
-	var temp;
-	var noon = new Date("12:00:00");
-	var eve = new Date("18:00:00");
-	var night = new Date("22:00:00");
-	var overnight = new Date("02:00:00");
-
-	if (time >= overnight & time < noon) {
-		temp = json.list[day].temp.morn;
-	} else if (time >= noon & time < eve) {
-		temp = json.list[day].temp.day;
-	} else if (time >= eve & time < night) {
-		temp = json.list[day].temp.eve;
-	} else {
-		temp = json.list[day].temp.night;
-	};
-
-	temp = temp * 9 / 5  - 459.67;
-	temp = String(Math.round(temp)).concat("°F");
-	var title = "Weather in ";
-	title = title.concat(city);
-	var d = new Date(datetime);
-	// Change weather lables
-	changeText("selectedCity", title);
-	changeText("selectedDate", d);
-	changeText("selectedTemp", temp);
-	changeText("selectedWeather", main);
+ 	if (diff <= 0) {
+		alert("Please enter a future date and time");
+ 	} else if (hb > 239) {
+		alert("Please select a time within the next 240 hours so we can factor in weather forecasts");
+ 	} else {
+ 		return hb;
+ 	};
 }

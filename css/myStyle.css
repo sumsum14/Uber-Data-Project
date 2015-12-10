@@ -30,17 +30,11 @@ body{
 }
 
 .row-height {
-  height: 100px;
+  height: 50px;
 }
 
-#suggestCity {
-  padding-top: 10px;
-  height: 34px;
-  width: 250px;
-  line-height: 10px;
-  background-color: #000;
-  border-color: #FF0;
-  border-radius: 20px;
+.row-border {
+  height: 20px;
 }
 
 .navList {
@@ -56,7 +50,21 @@ option {
   text-align: center;
 }
 
+.sectionText {
+  /*background-color: #ededed;*/
+}
+
 #drivers .driverInfo {
   min-width: 140px;
   text-align: center;
+}
+
+button {
+  padding-top: 10px;
+  height: 34px;
+  width: 250px;
+  line-height: 10px;
+  background-color: #000;
+  border-color: #FF0;
+  border-radius: 20px;
 }

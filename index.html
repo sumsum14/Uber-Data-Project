@@ -2,11 +2,9 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Uber is Dope</title>
+    <title>Uber Project</title>
 
-    <!-- Task #1                            				-->
-    <!-- Insert libraries									-->
-    <!--							 						-->
+    <!-- Libraries and Such-->
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="libs/d3/d3.min.js" charset="utf-8"></script>
     <script src="libs/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
@@ -15,105 +13,117 @@
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
     <!-- Stylesheets-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/myStyle.css">
 
     <!-- Get some nice font-->
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
-
-    <!--                             						        -->
-    <!-- Insert own scripts for each vis .js files 			-->
-    <!--							 						                      -->
-    <!--script src="js/barvis.js"></script-->
+    <!-- External js files -->
     <script src="js/surgeEstimator.js"></script>
     <script src="js/mapvis.js"></script>
 
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <!--link rel="stylesheet" href="/resources/demos/style.css"-->
-  <script>
-  $(function() {
-    $( "#datepicker" ).datepicker(
-    );
-  });
-  </script>
-
-    <!-- Add own stylesheet from css folder					-->
-    <!--link rel="stylesheet" type="text/css" href="css/myStyle.css"-->
-
+    <script>
+    $(function() {
+      $( "#datepicker" ).datepicker(
+      );
+    });
+    </script>
 </head>
 
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
+      <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-header">
+              <img src="img/usurge.png" alt="uSurge Logo" width=120/>
+            </div>
+            <div class="collapse navbar-collapse">
+              
+              <ul class="nav navbar-nav navbar-right">
+                <li class="navList">I plan to ride</li>
+                <li> 
+                    <form id="rideSelect">
+                      <select id="rideType" class="estimatorForm">
+                          <option value="uberX">UberX</option>
+                          <option value="uberXL">UberXL</option>
+                          <option value="UberBlack">UberBlack</option>
+                          <option value="UberSUV">UberSUV</option>
+                          <option value="uberTAXI">UberTAXI</option>
+                          <option value="uberSELECT">UberSELECT</option>
+                        </select>
+                    </form>
+                </li>
+                <li class="navList">on</li>
+                <li>
+                      <form id="dateSelect">
+                            <input type="text" id="datepicker" class="estimatorForm">
+                      </form>
+                </li>
+                <li class="navList">at</li>
+                <li>
+                    <form id="timeSelect">
+                          <input type="time" name="usr_time" id="timepicker" class="estimatorForm">
+                    </form>
+                </li>
+                <li class="navList">in</li>
+                <li> 
+                    <form id="citySelect">
+                        <select name="city" id="nowCity" class="estimatorForm">
+                          <option value="Atlanta">Atlanta</option>
+                          <option value="Boston">Boston</option>
+                          <option value="New York">New York</option>
+                          <option value="San Francisco">San Francisco</option>
+                          <option value="Washington DC">Washington DC</option>
+                        </select>
+                    </form>
+                </li>
+                <li class="navList">
+                    <button id="#submitChanges" onclick=submitChanges()>
+                      <p id="submitChangesText"> What's my surge? </p>
+                    </button>
+                </li>
+              </ul>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          
-          <ul class="nav navbar-nav navbar-right">
-            <li class="navList">I plan to ride on</li>
-            <li>
-                  <form id="dateSelect">
-                        <input type="text" id="datepicker" class="estimatorForm" onchange="onChange()">
-                  </form>
-            </li>
-            <li class="navList">at</li>
-            <li>
-                <form id="timeSelect">
-                        <input type="time" name="usr_time" id="timepicker" class="estimatorForm" onchange="onChange()">
-                </form>
-            </li>
-            <li class="navList">in</li>
-            <li> 
-                <form id="citySelect">
-                    <select name="city" id="nowCity" class="estimatorForm" onchange="onChange()">
-                      <option value="Atlanta">Atlanta</option>
-                      <option value="Boston">Boston</option>
-                      <option value="New York">New York</option>
-                      <option value="San Francisco">San Francisco</option>
-                      <option value="Washington DC">Washington DC</option>
-                    </select>
-                </form>
-            </li>
-            <li class="navList">
-                <button id="suggestCity" onclick=getLocation()>
-                  <p id="suggestCityText"> Not in your city? Suggest a location! </p>
-                </button>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-left">
-            <li><img src="img/usurge.png" alt="uSurge Logo" width=120/></li>
-          </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+      </nav>
 
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
+    <div class="row row-height"></div>
     <div class="row row-height"></div>
 
     <div class="row" id="topRow">
-
         <div class="col-md-6">
-
             <div class="row">
                   <div class="col-md-8 sectionTab">
                       <div class="col-md-4"></div>
                       <div class="col-md-8">
-                        <div class="row">
-                            <h1><b id="selectedCity">Select a city</b></h1>
-                        </div>
+                          <h1><b id="selectedCity">Select a city</b></h1>
                       </div>
                   </div>
-                  <div class="col-md-4"></div>
+                  <div class="col-md-4">
+                          <h1><b id="surge">for Surge</b></h1>
+                  </div>
             </div>
 
             <div class="row">
                       <div class="col-md-2"></div>
-                      <div class="col-md-6">
-                          <h4 id="selectedDate"></h4>
+                      <div class="col-md-4">
+                          <h3 id="selectedDate"></h3>
+                      </div>
+                      <div class="col-md-2">
+                          <h3 id="selectedTime"></h3>
                       </div>
                       <div class="col-md-2">
                           <h3 id="selectedWeather"></h3>
@@ -138,27 +148,134 @@
         </div>
     </div>
 
-    <!--  -->
+
+
+    <div class="row-height"></div>
+
+    <!--div class="row row-border">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-8">
+            <div class="col-md-8 sectionText">dsds</div>
+            <div class="col-md-4"></div>
+        </div>
+    </div-->
+    <div class="row">
+        <div class="col-md-4">
+          <div class="row-border"></div>
+          <div class="row sectionTab">
+                <h1><b>Surges Explained</b></h1>
+          </div>
+        </div>
+        <div class="col-md-8 sectionText">
+          <div class="col-md-10 col-md-offset-1">
+              <h3><b>No surge:</b> looks like it's your lucky day</h3>
+              <h3><b>Mid surge:</b> 1.5</h3>
+              <h3><b>Low surge:</b> Under 1.5</h3>
+              <h3><b>High surge:</b> Over 1.5</h3>
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    <div class="row-height"></div>
+
+    <div class="row">
+        <div class="col-md-4 col-md-push-8">
+          <div class="row-border"></div>
+          <div class="row sectionTab">
+                <h1><b>What we did</b></h1>
+          </div>
+        </div>
+        <div class="col-md-8 col-md-pull-4 sectionText">
+          <div class="col-md-10 col-md-offset-1">
+              <p> Explanation of machine learning algoriths used </p>
+          </div>
+        </div>
+    </div>
+
+    <div class="row-height"></div>
+
+    <div class="row">
+        <div class="col-md-4">
+          <div class="row-border"></div>
+          <div class="row sectionTab">
+                <h1><b>What got us going</b></h1>
+          </div>
+        </div>
+        <div class="col-md-8 sectionText">
+          <div class="col-md-10 col-md-offset-1">
+              <p>We wanted to explore Uber’s concept of surge pricing by conducting an analysis of which factors affect surge pricing the most. This was particularly interesting to us because Uber’s API was just recently made public, so there have not been many predictive/analytical projects looking at surge pricing. This gives us a novel opportunity to explore data that affects our daily lives, and to incorporate several of the statistics and computational methodologies that we learned this semester. The data set that we have compiled can also allow us to look at many different variables and their effect on surge pricing. For example, we will look at how temperature and weather affect the surge charge on an uber. Also, should someone call the Uber now, or if they have time wait an hour or two in order to try and find a better price? We all use Uber, and love the service; however, we wanted to create a predictive model in order to find the times that we do not have to be charged extra money!</p>
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    <div class="row-height"></div>
+
+    <div class="row">
+        <div class="col-md-4 col-md-push-8 sectionTab">
+                <h1><b>Uber API</b></h1>
+        </div>
+        <div class="col-md-8 col-md-pull-4 sectionText">
+          <div class="col-md-10 col-md-offset-1">
+              <p>The Uber API was made available to the general public earlier this year. While the company's main motivation for opening up the API was to allow technology developers to embed Uber into their apps, it also allowed for users like to amass and analyze ride data. While Uber did not allow us to access past historical data, once we knew we wanted to collect data we were able to use AWS to make calls (queries?) every 5 minutes to the Uber API and receive back information as if we were a user requesting a ride at that moment in time. We did this over 3 weeks in 5 different cities.</p>
+          </div>
+        </div>
+    </div>
+
     <div class="row-height"></div>
     <div class="row">
-        <div class="col-md-4 sectionTab">
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-9">
-                <h1><b><strike>How's</strike> Why's the weather up there?</b></h1>
-            </div>
+        <div class="col-md-4">
+          <div class="row-border"></div>
+          <div class="row sectionTab">
+                <h1><b>The Data</b></h1>
+          </div>
+        </div>
+        <div class="col-md-8 sectionText">
+          <div class="col-md-10 col-md-offset-1">
+              <p>Insert blurb about what the data provdes, how we had to process it and such and the like so to speak as one does blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah </p>
+          </div>
+        </div>
+    </div>
+
+    <div class="row-height"></div>
+    <div class="row">
+        <div class="col-md-4 col-md-push-8">
+          <div class="row-border"></div>
+          <div class="row sectionTab">
+                <h1><b>What we found</b></h1>
+          </div>
+        </div>
+        <div class="col-md-8 col-md-pull-4 sectionText">
+          <div class="col-md-10 col-md-offset-1">
+              <p> Day of the week, weather, temperature, car type, socioeconomic stuff, cities </p>
+          </div>
+        </div>
+    </div>
+
+    <div class="row-height"></div>
+    <div class="row">
+        <div class="col-md-4">
+          <div class="row-border"></div>
+          <div class="row sectionTab">
+                <h1><b>To see more</b></h1>
+          </div>
+        </div>
+        <div class="col-md-8 sectionText">
+          <div class="col-md-10 col-md-offset-1">
+              <p> you can go fuck yourself or look at our process book blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah </p>
+          </div>
         </div>
     </div>
 
     <div class="row-height"></div>
     <div class="row" id="drivers">
-        <div class="col-md-4 col-md-push-8 sectionTab">
-              <p>
+        <div class="col-md-4 col-md-push-8">
+          <div class="row-border"></div>
+          <div class="row sectionTab">
                 <h1><b>Meet the drivers</b></h1>
-                We're big fans of Uber so we wanted to do something fun and relevant!
-                <br><br>
-                Star ratings reflect the individual's actual Uber rating.
-              </p>
+          </div>
         </div>
         <div class="col-md-8 col-md-pull-4">
               <div class="col-md-1"></div>
@@ -211,6 +328,7 @@
                   </div>
               </div>
 
+              <a href="http://procatinator.com/" target="blank">
               <div class="col-md-2 driverInfo">
                   <div class="row">
                       <img src="img/Scratchy.png"/>
@@ -222,9 +340,10 @@
                       </b>
                   </div>
               </div>
+              </a>
         </div>
     </div>
-
+    <div class="row-height"></div>
 
     <!--                            -->
     <!--                            -->
@@ -233,7 +352,7 @@
     <!--                            -->
 
     <script>
-      /* Location Finder */
+      /* Location Finder -- NECESSARY?? */
       var x = document.getElementById("suggestCityText");
 
       function getLocation() {
