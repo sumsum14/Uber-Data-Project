@@ -112,33 +112,41 @@
                           <h1><b id="selectedCity">Select a city</b></h1>
                       </div>
                   </div>
-                  <div class="col-md-4">
-                          <h1><b id="surge">for Surge</b></h1>
-                  </div>
+                  <div class="col-md-4"></div>
             </div>
 
-            <div class="row">
-                      <div class="col-md-2"></div>
-                      <div class="col-md-4">
-                          <h3 id="selectedDate"></h3>
+            <div class="row row-height">
+                      <div class="col-md-3">
+                          <h3 class="surgeDisplay1" id="selectedDate"></h3>
                       </div>
-                      <div class="col-md-2">
-                          <h3 id="selectedTime"></h3>
+                      <div class="col-md-3">
+                          <h3 class="surgeDisplay1" id="selectedTime"></h3>
                       </div>
-                      <div class="col-md-2">
-                          <h3 id="selectedWeather"></h3>
+                      <div class="col-md-3">
+                          <h3 class="surgeDisplay1" id="selectedWeather"></h3>
                       </div>
-                      <div class="col-md-2">
-                          <h3 id="selectedTemp"></h3>
+                      <div class="col-md-3">
+                          <h3 class="surgeDisplay1" id="selectedTemp"></h3>
                       </div>
             </div>
 
-            <div class="row" id="weatherVis">
-                <!--
-
-                    NEED TO MAKE WEATHER VISUALIZATION INTERACTIVE HERE
-                    
-                -->
+            <div class="row" id="surgeProb">
+                <div class="col-md-3 surgeTitle">
+                  <h2>No Surge</h2>
+                  <h3 class="surgeDisplay" id="noSurge"></h3>
+                </div>
+                <div class="col-md-3 surgeTitle">
+                  <h2>Low Surge</h2>
+                  <h3 class="surgeDisplay" id="lowSurge"></h3>
+                </div>
+                <div class="col-md-3 surgeTitle">
+                  <h2>Mid Surge</h2>
+                  <h3 class="surgeDisplay" id="midSurge"></h3>
+                </div>
+                <div class="col-md-3 surgeTitle">
+                  <h2>High Surge</h2>
+                  <h3 class="surgeDisplay" id="highSurge"></h3>
+                </div>
             </div>
 
         </div>
@@ -170,9 +178,9 @@
         <div class="col-md-8 sectionText">
           <div class="col-md-10 col-md-offset-1">
               <h3><b>No surge:</b> looks like it's your lucky day</h3>
-              <h3><b>Mid surge:</b> 1.5</h3>
-              <h3><b>Low surge:</b> Under 1.5</h3>
-              <h3><b>High surge:</b> Over 1.5</h3>
+              <h3><b>Mid surge:</b> 1.5x</h3>
+              <h3><b>Low surge:</b> Under 1.5x</h3>
+              <h3><b>High surge:</b> Over 1.5x</h3>
           </div>
         </div>
         <div class="col-md-1"></div>
@@ -188,8 +196,8 @@
           </div>
         </div>
         <div class="col-md-8 col-md-pull-4 sectionText">
-          <div class="col-md-10 col-md-offset-1">
-              <p> Explanation of machine learning algoriths used </p>
+          <div class="col-md-10 col-md-offset-1"><br>
+              <p>First, we collected the data using uber's new API on an AWS machine. Second, we used exploratory data analysis to glean more insights into the data set. Much of the exploratory data analysis proved our intuition correct. For example, the colder the temperature, the less likely people are to walk and the more likely there will be a surge price on ubers. Finally, we trained a Random Forest Classifier on our dataset to have a comprehensive model that can be used to glean further insights into the data and create a very reliable prediction of the surge price (over 96% accuracy!). After creating the model, we wanted to look at Boston specifically. We turned attention to two of the most important features we found in our model: temperature and car type. We proved our intuition with temperature using the model, then showed that it is possible also show consumer behaivor in Boston with respect to service type.</p><br>
           </div>
         </div>
     </div>
@@ -204,8 +212,8 @@
           </div>
         </div>
         <div class="col-md-8 sectionText">
-          <div class="col-md-10 col-md-offset-1">
-              <p>We wanted to explore Uber’s concept of surge pricing by conducting an analysis of which factors affect surge pricing the most. This was particularly interesting to us because Uber’s API was just recently made public, so there have not been many predictive/analytical projects looking at surge pricing. This gives us a novel opportunity to explore data that affects our daily lives, and to incorporate several of the statistics and computational methodologies that we learned this semester. The data set that we have compiled can also allow us to look at many different variables and their effect on surge pricing. For example, we will look at how temperature and weather affect the surge charge on an uber. Also, should someone call the Uber now, or if they have time wait an hour or two in order to try and find a better price? We all use Uber, and love the service; however, we wanted to create a predictive model in order to find the times that we do not have to be charged extra money!</p>
+          <div class="col-md-10 col-md-offset-1"><br>
+              <p>We wanted to explore Uber’s concept of surge pricing by conducting an analysis of which factors affect surge pricing the most. This was particularly interesting to us because Uber’s API was just recently made public, so there have not been many predictive/analytical projects looking at surge pricing. This gives us a novel opportunity to explore data that affects our daily lives, and to incorporate several of the statistics and computational methodologies that we learned this semester. The data set that we have compiled can also allow us to look at many different variables and their effect on surge pricing. For example, we will look at how temperature and weather affect the surge charge on an uber. Also, should someone call the Uber now, or if they have time wait an hour or two in order to try and find a better price? We all use Uber, and love the service; however, we wanted to create a predictive model in order to find the times that we do not have to be charged extra money!</p><br>
           </div>
         </div>
         <div class="col-md-1"></div>
@@ -214,12 +222,15 @@
     <div class="row-height"></div>
 
     <div class="row">
-        <div class="col-md-4 col-md-push-8 sectionTab">
+        <div class="col-md-4 col-md-push-8">
+          <div class="row-border"></div>
+          <div class="row sectionTab">
                 <h1><b>Uber API</b></h1>
+          </div>
         </div>
         <div class="col-md-8 col-md-pull-4 sectionText">
-          <div class="col-md-10 col-md-offset-1">
-              <p>The Uber API was made available to the general public earlier this year. While the company's main motivation for opening up the API was to allow technology developers to embed Uber into their apps, it also allowed for users like to amass and analyze ride data. While Uber did not allow us to access past historical data, once we knew we wanted to collect data we were able to use AWS to make calls (queries?) every 5 minutes to the Uber API and receive back information as if we were a user requesting a ride at that moment in time. We did this over 3 weeks in 5 different cities.</p>
+          <div class="col-md-10 col-md-offset-1"><br>
+              <p>The Uber API was made available to the general public earlier this year. While the company's main motivation for opening up the API was to allow technology developers to embed Uber into their apps, it also allowed for users like to amass and analyze ride data. While Uber did not allow us to access past historical data, once we knew we wanted to collect data we were able to use AWS to make calls (queries?) every 5 minutes to the Uber API and receive back information as if we were a user requesting a ride at that moment in time. We did this over 3 weeks in 5 different cities.</p><br>
           </div>
         </div>
     </div>
@@ -233,8 +244,8 @@
           </div>
         </div>
         <div class="col-md-8 sectionText">
-          <div class="col-md-10 col-md-offset-1">
-              <p>Insert blurb about what the data provdes, how we had to process it and such and the like so to speak as one does blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah </p>
+          <div class="col-md-10 col-md-offset-1"><br>
+              <p> The dataset we collected over 3 weeks was information pulled from an API call every 5 minutes to Uber's <a href="https://developer.uber.com/docs/v1-estimates-price" target="blank">Price Estimates</a> endpoint passing in parameters for the location we wanted to request a ride from, as well as an API call to WeatherUnderground's API to receive temperature and weather data. For each call we received the unique ride ID, time/date, type of uber, surge, temperature, weather description, state, and income of the area. </p><br>
           </div>
         </div>
     </div>
@@ -248,36 +259,107 @@
           </div>
         </div>
         <div class="col-md-8 col-md-pull-4 sectionText">
-          <div class="col-md-10 col-md-offset-1">
-              <p> Day of the week, weather, temperature, car type, socioeconomic stuff, cities </p>
+          <div class="col-md-10 col-md-offset-1"><br>
+              <h3>Exploratory Analysis</h3>
+              <p>We found that generally most rides do not have surge, only about 4% of the time will an Uber ride contain a surge charge. Average surge overall was about 1.024x the base price. The graphs we found to be most interesting were the graph on the effect of the city effect on surge, the effect of temperature on surge, the effect of time of day on surge, and the effect of weather type on surge.</p>
+              
+              <h3>City</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <iframe src="https://plot.ly/~abigailorlando/67/effect-of-city-on-surge/" width="500" height="300" seamless="seamless" scrolling="no"></iframe>
+                </div>
+                <div class="col-md-6">
+                  <div class="row-height"></div>
+                  <p> Of all the cities that we looked at Boston and Washington DC have highest overall surge and New York has the lowest. New York having the lowest surge intuitively makes sense as New York is an Uber hub as well as has lots of alternative modes of transportation, which limits excess demand. Boston and DC have less developed public transportation systems so the demand for Uber is higher. </p>
+                </div>
+              </div>
+              <br>
+              <h3>Temperature</h3>
+              <div class="row">
+                <div class="col-md-8 col-md-push-4">
+                  <iframe src="https://plot.ly/~abigailorlando/53/effect-of-temperature-on-surge/" width="750" height="300" seamless="seamless" scrolling="no"></iframe>
+                </div>
+                <div class="col-md-4 col-md-pull-8">
+                  <div class="row-height"></div>
+                  <p> We see that with extremely cold temperatures there is a higher surge because of higher demand for Uber with not as much supply. We see a similar effect but not as strong for extremely hot temperatures. </p>
+                </div>
+              </div>
+              <br>
+              <h3>Weather</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <iframe src="https://plot.ly/~abigailorlando/49/effect-of-weather-on-surge/" width="500" height="300" seamless="seamless" scrolling="no"></iframe>
+                </div>
+                <div class="col-md-6">
+                  <div class="row-height"></div>
+                  <p> Weather conditions are clear most of the time, but when there is rain or there is an indication of rain with cloudiness, surge pricing goes up as people do not want to travel in adverse weather conditions. </p>
+                </div>
+              </div>
+              <br>
+              <h3>Time of Day</h3>
+              <div class="row">
+                <div class="col-md-6 col-md-push-6">
+                  <iframe src="https://plot.ly/~abigailorlando/71/effect-of-time-on-surge/" width="500" height="300" seamless="seamless" scrolling="no"></iframe>
+                </div>
+                <div class="col-md-6 col-md-pull-6">
+                  <div class="row-height"></div>
+                  <p> Overall, the highest average surge is at 5 and 6 PM, followed by 8 AM. Since these are rush hour times, it makes sense that there would be high demand for Ubers at these times, and not enough supply. The lowest average surge occurs at 10 AM and 8 PM, which also makes sense because there is generally a low demand for transportation at these times of the day. </p>
+                </div>
+              </div>     
+              <br>
+              <h3>Model Summary</h3>
+              <p>In order to create a predictive model, we decided to use a Random Forest Classifier. Using a Random Forest Classifier makes sense for three reasons. First, we are using a dataset with unbalenced classes in that there are many more cases where there is "No Surge" than the other three classes. A Random Forest works well with unbalenced classes. Second, we are using a lot of data in the training of the model. Random Forests samples from the data many times and so the prediction will be optimal if there is a lot of data to be used. Finally, we are able to look at feature importance in the data, which is particularly enlightening on this dataset. Thus we are able to see what features have the biggest effect on the pricing prediction.</p>
+              <p>We split the dataset into a test and training set first in order to test for overfitting of the model. We then had to choose the hyperparameters for the model. We used a 5 fold cross validation technique in order to train the hyperparameters of the model. After fully training the model, we found that the model predicted the correct class 96.3% of the time on the test set and 98% of the time on the training set. This small difference shows that the model was not overfitted and we properly trained the model.</p>
+              <br>
+              <h3>Final Analysis</h3>
+              <p>For the final Analysis of the model, we decided to look at two aspects of the model. First, we look at the feature importance found in the model sorted by the features that affect the prediction the model the most. Second, we restrict the model to the Boston area to look at how the city specific surge prices are affected by some of the most important variables found in the model: temperature and cartype</p>
+              <br>
+              <h3>Feature Importance</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <p>The graph shows the top 10 most predictive features in the model. As you can see, temperature is by far the most predictive variable that we pass into the model. Second, the next variable that seems to affect the prediction is the type of car. This is interesting because our car type feature serves as a proxy for the supply and demand dynamics of each uber service.</p>
+                </div>
+                <div class="col-md-6">
+                  
+                </div>
+              </div>
+              <br>
+              <h3>Temperature's Effect on Boston Ubers</h3>
+              <div class="row">
+                <div class="col-md-6 col-md-push-6">
+                  <p>We created dummy data in order to create this plot. We fixed all other variables but only altered the temperature variable to see how the probability of a surge changes. As you can see, as temperature increases so does the probability of there being no uber surge. Interestingly enough, if you want to get a cheap uber, then use the service when it is hot outside! The model predicts that the colder the temperature is, the more likely there is to be a surge multiple.</p>
+                </div>
+                <div class="col-md-6 col-md-pull-6">
+                  
+                </div>
+              </div>
+              
+              <br>
+
+              <h3>Car Type Effect on Boston Ubers</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <p>The graph shows an interesting proxy into consumer usage of uber's services in Boston. We interpret the graph as the higher the probability of a surge, the more demand there is for that particular service, which in turn leads to higher surges. uberX and uberXL are by far the most demanded services in the Boston area. uberBLACK seems to be the least demanded service. The graph also shows the widespread application of the model and the incredible amount of analysis that can be done to glean insights into uber's business!</p>
+                </div>
+                <div class="col-md-6">
+                  
+                </div>
+              </div>
+              
+              <br>
           </div>
         </div>
     </div>
 
-    <div class="row-height"></div>
-    <div class="row">
-        <div class="col-md-4">
-          <div class="row-border"></div>
-          <div class="row sectionTab">
-                <h1><b>To see more</b></h1>
-          </div>
-        </div>
-        <div class="col-md-8 sectionText">
-          <div class="col-md-10 col-md-offset-1">
-              <p> you can go fuck yourself or look at our process book blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah </p>
-          </div>
-        </div>
-    </div>
-
-    <div class="row-height"></div>
+    <div class="row-height"><hr></div>
     <div class="row" id="drivers">
-        <div class="col-md-4 col-md-push-8">
+        <div class="col-md-4">
           <div class="row-border"></div>
           <div class="row sectionTab">
                 <h1><b>Meet the drivers</b></h1>
           </div>
         </div>
-        <div class="col-md-8 col-md-pull-4">
+        <div class="col-md-8">
               <div class="col-md-1"></div>
                   
               <div class="col-md-2 driverInfo">
@@ -328,10 +410,10 @@
                   </div>
               </div>
 
-              <a href="http://procatinator.com/" target="blank">
+              
               <div class="col-md-2 driverInfo">
                   <div class="row">
-                      <img src="img/Scratchy.png"/>
+                      <a href="http://procatinator.com/" target="blank"><img src="img/Scratchy.png"/></a>
                   </div>
                   <div class="row">
                       <b>
@@ -340,10 +422,10 @@
                       </b>
                   </div>
               </div>
-              </a>
         </div>
     </div>
     <div class="row-height"></div>
+    
 
     <!--                            -->
     <!--                            -->

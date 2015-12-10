@@ -20,15 +20,18 @@ function updateWeather(date, time, city, rideType) {
 
  	console.log(hourBlock);
 
+
+
  	//call weather data from Weather Underground API and update display divs
-	var w_url = "http://api.wunderground.com/api/51192aa9f8ab44fb/hourly10day/q/"+String(lat)+","+String(lat)+".json"
+ 	// Summer key: 1b29e9b48c40d837
+ 	// Dillon key: 51192aa9f8ab44fb
+	var w_url = "http://api.wunderground.com/api/51192aa9f8ab44fb/hourly10day/q/"+String(lat)+","+String(lat)+".json";
 	$.getJSON(w_url, function(json) {
 			console.log(json);
 			changeText("selectedTemp", json.hourly_forecast[hourBlock].temp.english + "°F");
 			changeText("selectedWeather", json.hourly_forecast[hourBlock].condition);
 			predictSurge(rideType, city, json.hourly_forecast[hourBlock].temp.english, day, time, json.hourly_forecast[hourBlock].condition);
 	});
-	
 }
 
 // Function called when use submits selections
@@ -55,12 +58,11 @@ function predictSurge(rideType, city, temp, day, time, weather) {
 	// make $.getJSON() call to AWS to return prediction in json format
 	$.getJSON(modelURL, function(json) {
 		console.log("hey");
-		console.log(json);
-		for (key in json) {
-			if (json[key]==Math.max(json)) {
-				changeText("surge", key);
-			}
-		};
+		getSurge(json);
+		/*changeText("noSurge", json["No Surge"]);
+		changeText("highSurge", json["High Surge"]);
+		changeText("lowSurge", json[""]);
+		changeText("midSurge", json[3]);*/
 		
   	});
 }
@@ -69,6 +71,15 @@ function predictSurge(rideType, city, temp, day, time, weather) {
 function changeText(id, text) {
 	var element = document.getElementById(id);
 	element.innerHTML = text;
+}
+
+function getSurge(json) {
+	var ids = ["noSurge", "highSurge", "lowSurge", "midSurge"];
+	var c = 0;
+	for (i in json) {
+		changeText(ids[c], String((Math.round(json[i]*1000)/10)).concat("%"));
+		c+=1;
+	}
 }
 
 // For 5-day forecasts, 3-hour blocks

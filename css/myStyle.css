@@ -30,7 +30,8 @@ body{
 }
 
 .row-height {
-  height: 50px;
+  height: 60px;
+  text-align: center;
 }
 
 .row-border {
@@ -51,7 +52,8 @@ option {
 }
 
 .sectionText {
-  /*background-color: #ededed;*/
+  border-bottom: 3px solid #e4e4e4;
+  border-top: 3px solid #e4e4e4;
 }
 
 #drivers .driverInfo {
@@ -67,4 +69,22 @@ button {
   background-color: #000;
   border-color: #FF0;
   border-radius: 20px;
+}
+
+.surgeTitle {
+  text-align: center;
+}
+
+.surgeDisplay {
+  text-align: center;
+  height: 100px;
+  border-bottom: 3px solid #e4e4e4;
+  border-top: 3px solid #e4e4e4;
+  vertical-align: middle;
+}
+
+.surgeDisplay1 {
+  text-align: center;
+  vertical-align: middle;
+  font-weight: bold;
 }
